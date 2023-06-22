@@ -1,0 +1,31 @@
+/**
+ * Converts an image from one format to another
+ * 
+ * @param {String} sourcePath The path to the source image
+ * @param {String} targetPath The path to the target image
+ * @param {String} targetFormat The format to convert the image to
+ * @param {Object} options Options to pass to the image converter
+ * 
+ * @returns {Boolean} True if the conversion was successful, false otherwise
+ */
+function convertImageFormat(sourcePath, targetPath, targetFormat, options) {
+    try {
+        // Import the necessary libraries
+        const fs = require('fs');
+        const sharp = require('sharp');
+
+        // Read the source image
+        const sourceImage = fs.readFileSync(sourcePath);
+
+        // Convert the image to the target format
+        const targetImage = sharp(sourceImage).toFormat(targetFormat, options);
+
+        // Write the target image to the target path
+        fs.writeFileSync(targetPath, targetImage);
+
+        return true;
+    } catch (err) {
+        console.error(err);
+        return false;
+    }
+}
